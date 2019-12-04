@@ -84,6 +84,7 @@ function DeleteEntry(ref)
 {
 	value = parseInt($(ref).closest('td').find('input[type="hidden"]').val());
 	data.splice(value,1);
+	Load_AlreadyPaid();
 	Load_ToBePaid();
 }
 

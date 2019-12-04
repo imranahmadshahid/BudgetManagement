@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Budget Management</title>
+</head>
+
+<body>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+ <h1 class="text-center">Budget Management</h1>
+ 
+ <div class="row">
+	<div class="col-sm-4 col-sm-offset-4">
+		<div class="form-group">
+		<div class="text-center">Add Person</div> 
+		<input type="text" id="txtname"  class="form-control"/> 
+		<div class="text-center"><input type="button" id="btnaddname" onClick="btnaddname_click()" value="Add Person" class="btn-primary" /> </div></div>
+		
+		<div class="form-group">
+			<div class="text-center">Select Person</div> 
+			<select id="cmbperson" class="form-control">
+			</select>
+		</div>
+	</div>
+ </div>
+ 
+ 
+  <div class="row">
+	<div class="col-sm-12">
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading text-center">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">To Be Paid</a>
+					</h4>
+				</div>
+				<div id="collapse1" class="panel-collapse collapse in">
+					<div class="panel-body">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Money</th>
+										<th>Text</th>
+										<th>Delete</th>
+										<th>Move To Paid</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyToBePaid">
+									
+								</tbody>
+							</table>
+							<div class="form-group"> 
+								Money : <input type="text" id="txtMoney" class="form-control" />
+							</div>
+							<div class="form-group"> 
+								Description : <input type="text" id="txtText" class="form-control" />
+							</div>
+							<div class="text-center">
+								<input type="button" id="btnaddentry" onclick="btnaddentry_click()" class="btn btn-success"  value="Add Entry"/>
+							</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading text-center">
+					<h4 class="panel-title" >
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Paid History</a>
+					</h4>
+				</div>
+				<div id="collapse2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Money</th>
+										<th>Text</th>
+										<th>Delete</th>
+										<th>Move To Paid</th>
+									</tr>
+								</thead>
+								<tbody id="alreadyPaid">
+									
+								</tbody>
+							</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script  src="js/index.js"></script>
+</body>
+
+</html>

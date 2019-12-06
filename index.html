@@ -13,6 +13,12 @@
  <div class="row">
 	<div class="col-sm-4 col-sm-offset-4">
 		<div class="form-group">
+			<div class="text-center">
+				<input type="button" id="btnimport" value="import" class="btn btn-primary" />
+				<input type="button" id="btnexport" value="export" class="btn btn-success" />
+			</div>
+		</div>
+		<div class="form-group">
 		<div class="text-center">Add Person</div> 
 		<input type="text" id="txtname"  class="form-control"/> 
 		<div class="text-center"><input type="button" id="btnaddname" onClick="btnaddname_click()" value="Add Person" class="btn-primary" /> </div></div>
@@ -94,7 +100,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="Js/xlsx.js" type="text/javascript"></script>
+<script src="Js/filesaver.js" type="text/javascript"></script>
 <script src="Js/code.js" type="text/javascript"></script>
+
 </body>
 
 </html>

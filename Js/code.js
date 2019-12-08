@@ -7,6 +7,34 @@ function Load()
 {
 	cmbperson_dataload();
 	$("#btnexport").click(btnexport_click);
+	$("#btnimport").click(btnimport_click);
+	$("#btnexcelimport").change(btnexcelimport_change);
+	$("#cmbperson").change(cmbperson_change); 	
+}
+
+
+function cmbperson_change()
+{
+	Load_ToBePaid();
+	Load_AlreadyPaid();
+}
+
+function btnimport_click()
+{
+	$('#btnexcelimport').click();
+}
+
+function btnexcelimport_change(e)
+{
+	var reader = new FileReader();
+    reader.readAsArrayBuffer(e.target.files[0]);
+    reader.onload = function(e) {
+    var d = new Uint8Array(reader.result);
+    var wb = XLSX.read(d,{type:'array'});
+    var htmlstr = XLSX.write(wb,{sheet:"Sheet1", type:'binary',bookType:'csv'}).replace(/[^A-Za-z0-9,.\r\n]/g, '');
+	
+		ProcessInput(htmlstr);
+	}
 }
 
 function btnexport_click()
@@ -60,9 +88,10 @@ function Load_ToBePaid()
 {
 	var html='';
 	var sum=0.0;
+	var selectedPerson = $("#cmbperson option:selected").val();
 	for(var i = 0;i<data.length;i++)
 	{
-		if(data[i].status == 1)
+		if(data[i].status == 1 && data[i].PersonId == selectedPerson)
 		{
 			sum+=parseFloat(data[i].Money);
 			html += '<tr><td>'+data[i].Money+'</td><td>'+data[i].MoneyDescription+'</td><td><input type="button" onclick=DeleteEntry(this) value="Delete" class="btn btn-danger"/><input type="hidden" value="'+data[i].Id+'"/></td><td><input type="button" onclick=MoveToPaid(this) value="Move to Paid" class="btn btn-danger"/><input type="hidden" value="'+data[i].Id+'"/></td></tr>';
@@ -72,13 +101,45 @@ function Load_ToBePaid()
 	$('#tbodyToBePaid').html(html);
 }
 
+
+function ProcessInput(inputString)
+{
+	
+	var inputData = inputString.split('\n');
+	if(inputData.length>0)	
+		{
+			data = [];
+			names=[];
+		}
+		
+	var tempNames = [];
+	for(var i=0;i<inputData.length;i++)
+	{
+		if(inputData[i]=="" || inputData[i]==undefined)
+			continue;
+		var row = inputData[i].split(',');
+		var entry = {Id:row[0],PersonId:row[1],PersonName:row[2], Money:row[3], MoneyDescription:row[4], status: parseInt(row[5])};
+		data.push(entry);
+		tempNames.push(row[2]);
+	}
+	
+	names = Array.from(new Set(tempNames));
+	
+	cmbperson_dataload();
+	$("#cmbperson").val(data[0].PersonId);
+	Load_ToBePaid();
+	Load_AlreadyPaid();
+	
+}
+
 function Load_AlreadyPaid()
 {
 	var html='';
 	sum=0.0;
+	var selectedPerson = $("#cmbperson option:selected").val();
 	for(var i = 0;i<data.length;i++)
 	{
-		if(data[i].status == 2)
+		if(data[i].status == 2 && data[i].PersonId == selectedPerson)
 		{
 			sum+=parseFloat(data[i].Money);
 			html += '<tr><td>'+data[i].Money+'</td><td>'+data[i].MoneyDescription+'</td><td><input type="button" onclick=DeleteEntry(this) value="Delete" class="btn btn-danger"/><input type="hidden" value="'+data[i].Id+'"/></td><td><input type="button" onclick=MoveToUnPaid(this) value="Move to unPaid" class="btn btn-danger"/><input type="hidden" value="'+data[i].Id+'"/></td></tr>';
